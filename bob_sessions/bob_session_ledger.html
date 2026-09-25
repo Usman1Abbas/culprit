@@ -1,0 +1,104 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box} body{margin:0;background:#0a0a0b;color:#ededf0;font-family:Geist,system-ui,sans-serif;padding:32px}
+h1{font-size:22px;margin:0 0 4px;letter-spacing:-.02em} .sub{color:#8b8b95;font-size:13px;margin-bottom:6px}
+.prov{color:#5a5a63;font-size:11px;font-family:'Geist Mono',monospace;margin-bottom:22px}
+.kpis{display:flex;gap:14px;margin-bottom:24px;flex-wrap:wrap}
+.kpi{border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 18px;background:#111114}
+.kpi .v{font-family:'Geist Mono',monospace;font-size:24px;color:#3ecf8e} .kpi .k{color:#8b8b95;font-size:12px;margin-top:2px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.card{border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:14px 16px;background:#111114}
+.top{display:flex;align-items:center;gap:10px} .badge{font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.05em;border:1px solid;border-radius:999px;padding:3px 9px}
+.cost{margin-left:auto;font-family:'Geist Mono',monospace;font-size:15px;color:#ededf0} .unit{color:#8b8b95;font-size:10px}
+.desc{margin-top:9px;font-size:14px;font-weight:500} .meta{margin-top:8px;display:flex;gap:14px;color:#5a5a63;font-size:11px;font-family:'Geist Mono',monospace}
+</style></head><body>
+<h1>Culprit — IBM Bob Task Session Summaries</h1>
+<div class="sub">Per-task Bobcoin consumption for the triage engine's Bob agents (hypothesis race, dual critic, fix) + Bob-assisted dev tasks.</div>
+<div class="prov">Source: exported from the local Bob store ~/.bob/db/bob.db (table: tasks.costs) · IBMid usmanabbas500030@gmail.com · team ibm-hackathon-lablab</div>
+<div class="kpis">
+  <div class="kpi"><div class="v">125</div><div class="k">Bob tasks with consumption</div></div>
+  <div class="kpi"><div class="v">19.69</div><div class="k">Total Bobcoins consumed</div></div>
+  <div class="kpi"><div class="v">2,727,962</div><div class="k">Total context tokens</div></div>
+</div>
+<div class="grid"><div class="card">
+      <div class="top"><span class="badge" style="color:#4f8cff;border-color:#4f8cff44;background:#4f8cff18">Suggested fix</span>
+        <span class="cost">0.1591 <span class="unit">Bobcoins</span></span></div>
+      <div class="desc">text-unidecode</div>
+      <div class="meta"><span>task 47da4f00</span><span>20,301 ctx tokens</span><span>active</span></div>
+    </div><div class="card">
+      <div class="top"><span class="badge" style="color:#e6b450;border-color:#e6b45044;background:#e6b45018">Adversarial critic</span>
+        <span class="cost">0.2474 <span class="unit">Bobcoins</span></span></div>
+      <div class="desc">text-unidecode</div>
+      <div class="meta"><span>task 463237f0</span><span>29,719 ctx tokens</span><span>active</span></div>
+    </div><div class="card">
+      <div class="top"><span class="badge" style="color:#e6b450;border-color:#e6b45044;background:#e6b45018">Adversarial critic</span>
+        <span class="cost">0.1889 <span class="unit">Bobcoins</span></span></div>
+      <div class="desc">text-unidecode</div>
+      <div class="meta"><span>task b7b40acf</span><span>28,867 ctx tokens</span><span>active</span></div>
+    </div><div class="card">
+      <div class="top"><span class="badge" style="color:#3ecf8e;border-color:#3ecf8e44;background:#3ecf8e18">Hypothesis race agent</span>
+        <span class="cost">0.1347 <span class="unit">Bobcoins</span></span></div>
+      <div class="desc">text_unidecode</div>
+      <div class="meta"><span>task b81a0915</span><span>24,599 ctx tokens</span><span>active</span></div>
+    </div><div class="card">
+      <div class="top"><span class="badge" style="color:#3ecf8e;border-color:#3ecf8e44;background:#3ecf8e18">Hypothesis race agent</span>
+        <span class="cost">0.1841 <span class="unit">Bobcoins</span></span></div>
+      <div class="desc">text_unidecode</div>
+      <div class="meta"><span>task 8b2f2e9a</span><span>25,848 ctx tokens</span><span>active</span></div>
+    </div><div class="card">
+      <div class="top"><span class="badge" style="color:#3ecf8e;border-color:#3ecf8e44;background:#3ecf8e18">Hypothesis race agent</span>
+        <span class="cost">0.1354 <span class="unit">Bobcoins</span></span></div>
+      <div class="desc">text_unidecode</div>
+      <div class="meta"><span>task 5be0df34</span><span>26,986 ctx tokens</span><span>active</span></div>
+    </div><div class="card">
+      <div class="top"><span class="badge" style="color:#3ecf8e;border-color:#3ecf8e44;background:#3ecf8e18">Hypothesis race agent</span>
+        <span class="cost">0.2184 <span class="unit">Bobcoins</span></span></div>
+      <div class="desc">text_unidecode</div>
+      <div class="meta"><span>task e46b23ad</span><span>24,612 ctx tokens</span><span>active</span></div>
+    </div><div class="card">
+      <div class="top"><span class="badge" style="color:#3ecf8e;border-color:#3ecf8e44;background:#3ecf8e18">Hypothesis race agent</span>
+        <span class="cost">0.0938 <span class="unit">Bobcoins</span></span></div>
+      <div class="desc">text_unidecode</div>
+      <div class="meta"><span>task 665f8e07</span><span>26,595 ctx tokens</span><span>active</span></div>
+    </div><div class="card">
+      <div class="top"><span class="badge" style="color:#4f8cff;border-color:#4f8cff44;background:#4f8cff18">Suggested fix</span>
+        <span class="cost">0.1602 <span class="unit">Bobcoins</span></span></div>
+      <div class="desc">await</div>
+      <div class="meta"><span>task 5369763b</span><span>20,442 ctx tokens</span><span>active</span></div>
+    </div><div class="card">
+      <div class="top"><span class="badge" style="color:#e6b450;border-color:#e6b45044;background:#e6b45018">Adversarial critic</span>
+        <span class="cost">0.2085 <span class="unit">Bobcoins</span></span></div>
+      <div class="desc">Missing await</div>
+      <div class="meta"><span>task 0ef8d992</span><span>21,700 ctx tokens</span><span>active</span></div>
+    </div><div class="card">
+      <div class="top"><span class="badge" style="color:#e6b450;border-color:#e6b45044;background:#e6b45018">Adversarial critic</span>
+        <span class="cost">0.2082 <span class="unit">Bobcoins</span></span></div>
+      <div class="desc">Missing await</div>
+      <div class="meta"><span>task 3f2f5359</span><span>21,578 ctx tokens</span><span>active</span></div>
+    </div><div class="card">
+      <div class="top"><span class="badge" style="color:#3ecf8e;border-color:#3ecf8e44;background:#3ecf8e18">Hypothesis race agent</span>
+        <span class="cost">0.1234 <span class="unit">Bobcoins</span></span></div>
+      <div class="desc">await</div>
+      <div class="meta"><span>task a8f171e3</span><span>21,440 ctx tokens</span><span>active</span></div>
+    </div><div class="card">
+      <div class="top"><span class="badge" style="color:#3ecf8e;border-color:#3ecf8e44;background:#3ecf8e18">Hypothesis race agent</span>
+        <span class="cost">0.1224 <span class="unit">Bobcoins</span></span></div>
+      <div class="desc">Off-by-one</div>
+      <div class="meta"><span>task b07fd493</span><span>20,962 ctx tokens</span><span>active</span></div>
+    </div><div class="card">
+      <div class="top"><span class="badge" style="color:#3ecf8e;border-color:#3ecf8e44;background:#3ecf8e18">Hypothesis race agent</span>
+        <span class="cost">0.1235 <span class="unit">Bobcoins</span></span></div>
+      <div class="desc">await</div>
+      <div class="meta"><span>task 6ac0e61d</span><span>21,463 ctx tokens</span><span>active</span></div>
+    </div><div class="card">
+      <div class="top"><span class="badge" style="color:#3ecf8e;border-color:#3ecf8e44;background:#3ecf8e18">Hypothesis race agent</span>
+        <span class="cost">0.1235 <span class="unit">Bobcoins</span></span></div>
+      <div class="desc">await</div>
+      <div class="meta"><span>task 095c79b2</span><span>21,444 ctx tokens</span><span>active</span></div>
+    </div><div class="card">
+      <div class="top"><span class="badge" style="color:#3ecf8e;border-color:#3ecf8e44;background:#3ecf8e18">Hypothesis race agent</span>
+        <span class="cost">0.1232 <span class="unit">Bobcoins</span></span></div>
+      <div class="desc">Missing await</div>
+      <div class="meta"><span>task 06b0c316</span><span>21,395 ctx tokens</span><span>active</span></div>
+    </div></div>
+</body></html>
