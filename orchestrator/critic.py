@@ -7,10 +7,11 @@ from .prompts import load_prompt
 from .schema import RankedHypothesis, CriticVerdict
 
 
-async def challenge(top: RankedHypothesis, trace: str) -> CriticVerdict:
+async def challenge(top: RankedHypothesis, trace: str, lens: str = "") -> CriticVerdict:
     prompt = load_prompt("critic_agent").format(
         hypothesis_json=json.dumps(top.hypothesis.to_dict(), indent=2),
         trace=trace,
+        lens=lens or "Rigorously verify the disproof test truly isolates this cause.",
     )
     raw = await asyncio.to_thread(run_bob_task, prompt, role="critic", scenario_text=trace)
     data = parse_json(raw)

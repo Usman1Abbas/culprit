@@ -14,7 +14,7 @@ from . import config, granite
 from .bob_shell import run_bob_task, bobcoins_spent
 from .critic import challenge
 from .hypotheses import run_race
-from .schema import DiagnosisCard, Hypothesis, RankedHypothesis
+from .schema import CriticVerdict, DiagnosisCard, Hypothesis, RankedHypothesis
 
 
 class _Sandbox:
@@ -85,15 +85,29 @@ async def stream_triage(trace: str, emit: Callable[[str, Dict], None] = None) ->
 
         winner = ranked[0] if ranked else None
 
-        # 3) Adversarial critic on the winner
+        # 3) Adversarial critic on the winner — two independent passes with different lenses,
+        #    run in parallel. The winner survives only if NEITHER pass disproves it.
         critic_verdict = None
         if winner:
             _emit("critic_start", {"winner_id": winner.hypothesis.id})
             try:
-                critic_verdict = await challenge(winner, trace)
+                import asyncio
+                v1, v2 = await asyncio.gather(
+                    challenge(winner, trace,
+                              lens="Verify the disproof test truly isolates THIS cause and nothing else."),
+                    challenge(winner, trace,
+                              lens="Actively hunt for a SIMPLER or alternative root cause the race "
+                                   "may have missed. If a more plausible cause exists, set disproved=true."),
+                )
+                disproved = v1.disproved or v2.disproved
+                critic_verdict = CriticVerdict(
+                    disproof_test=v1.disproof_test,
+                    disproved=disproved,
+                    verdict_reason=f"Pass 1 (isolation): {v1.verdict_reason}  ||  "
+                                   f"Pass 2 (alternatives): {v2.verdict_reason}",
+                )
                 _emit("critic", critic_verdict.to_dict())
-                # If the critic disproves the winner, fall through to the next candidate.
-                if critic_verdict.disproved and len(ranked) > 1:
+                if disproved and len(ranked) > 1:
                     winner = ranked[1]
                     _emit("winner_reassigned", {"winner_id": winner.hypothesis.id})
             except Exception as e:

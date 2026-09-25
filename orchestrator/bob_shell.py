@@ -170,6 +170,20 @@ _SCENARIOS = {
                          "slice math in paginate() is the more direct cause.",
             "confidence": 0.3,
         },
+        "h4": {
+            "title": "Suspected async/ordering effect in the request path",
+            "culprit_file": "app/main.py", "culprit_symbol": "list_tasks", "line_hint": 21,
+            "reasoning": "Checked for concurrency/ordering effects, but the endpoint is synchronous; "
+                         "the shift is deterministic slice math, not a race.",
+            "confidence": 0.2,
+        },
+        "h5": {
+            "title": "Return-shape/contract mismatch in paginate()",
+            "culprit_file": "app/pagination.py", "culprit_symbol": "paginate", "line_hint": 6,
+            "reasoning": "The return type is correct (a list slice); the contract is fine — the "
+                         "start offset is what's wrong.",
+            "confidence": 0.33,
+        },
         "critic": {
             "disproof_test": "assert paginate(list(range(1,21)), page=1, per_page=10) == list(range(1,11))",
             "disproved": False,
@@ -200,6 +214,20 @@ _SCENARIOS = {
             "reasoning": "The Pydantic model allows email=None. Tightening the schema would help, "
                          "but the crash originates in parse_user, not the schema.",
             "confidence": 0.42,
+        },
+        "h4": {
+            "title": "Async handling issue in create_user",
+            "culprit_file": "app/main.py", "culprit_symbol": "create_user", "line_hint": 38,
+            "reasoning": "No async is involved in this path; the crash is a null attribute access, "
+                         "not a concurrency defect.",
+            "confidence": 0.18,
+        },
+        "h5": {
+            "title": "Schema/type contract permits an optional email",
+            "culprit_file": "app/main.py", "culprit_symbol": "UserIn", "line_hint": 28,
+            "reasoning": "The model types email as optional; tightening the contract could prevent "
+                         "None, but the crash still originates in parse_user.",
+            "confidence": 0.4,
         },
         "critic": {
             "disproof_test": "assert parse_user({'name': 'Ada'}).get('email') is None  # must not raise",
@@ -233,6 +261,21 @@ _SCENARIOS = {
                          "not awaiting it.",
             "confidence": 0.35,
         },
+        "h4": {
+            "title": "Unawaited coroutine: process_task returns enrich() without await",
+            "culprit_file": "app/tasks.py", "culprit_symbol": "process_task", "line_hint": 12,
+            "reasoning": "The concurrency lens catches it directly: enrich() is a coroutine returned "
+                         "without await, so the caller receives a coroutine object — matching the "
+                         "RuntimeWarning.",
+            "confidence": 0.88,
+        },
+        "h5": {
+            "title": "Return-shape contract mismatch in process_task",
+            "culprit_file": "app/tasks.py", "culprit_symbol": "process_task", "line_hint": 12,
+            "reasoning": "The declared return is a dict but a coroutine is returned; the contract "
+                         "mismatch is a symptom of the missing await.",
+            "confidence": 0.55,
+        },
         "critic": {
             "disproof_test": "result = await process_task({'id': 1}); assert result.get('enriched') is True",
             "disproved": False,
@@ -257,7 +300,7 @@ def _canned(role: str, prompt: str = "") -> str:
     scenario = _SCENARIOS[_detect_scenario(prompt)]
     if role == "fix":
         return scenario["fix"]
-    if role in ("h1", "h2", "h3", "critic"):
+    if role in ("h1", "h2", "h3", "h4", "h5", "critic"):
         return json.dumps(scenario[role])
     # unknown role → return the validation-angle hypothesis as a safe default
     return json.dumps(scenario.get("h2", scenario.get("h1")))

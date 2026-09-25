@@ -12,9 +12,13 @@ from .schema import Hypothesis
 # mode the `id` selects the canned reply for the detected scenario (see bob_shell._SCENARIOS).
 ANGLES = [
     {"id": "h1", "angle": "Logic error in the code path named by the trace "
-                          "(off-by-one, boundary, wrong operator, missing await)."},
+                          "(off-by-one, boundary, wrong operator)."},
     {"id": "h2", "angle": "Input validation / unhandled edge case (missing/None/empty input)."},
     {"id": "h3", "angle": "Data / state / configuration issue (seed data, shared state, env)."},
+    {"id": "h4", "angle": "Concurrency / async defect (missing await, unawaited coroutine, "
+                          "race condition, ordering)."},
+    {"id": "h5", "angle": "Interface / contract mismatch (wrong type, API shape, function "
+                          "signature, or return shape)."},
 ]
 
 

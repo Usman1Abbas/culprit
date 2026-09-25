@@ -9,6 +9,9 @@ hypothesis before it is shown to a human. Assume it is wrong until the evidence 
 {trace}
 ```
 
+## Additional focus for this pass
+{lens}
+
 ## Your task
 1. Write a minimal, concrete test (pytest) that would FAIL if — and only if — this hypothesis is
    the true root cause. (i.e. it should pass on correct code and fail on the current buggy code.)

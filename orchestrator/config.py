@@ -16,8 +16,9 @@ def _bool(name: str, default: str = "1") -> bool:
 # Master switch: 1 = canned agent output (zero Bobcoins), 0 = real Bob Shell + Granite.
 MOCK_MODE = _bool("MOCK_MODE", "1")
 
-# How many parallel hypothesis subagents run the race. Keep at 3 to protect the 40-Bobcoin budget.
-RACE_WIDTH = int(os.getenv("RACE_WIDTH", "3"))
+# How many parallel hypothesis subagents run the race. 5 = deeper coverage (logic, validation,
+# data, concurrency, contract). Lower via RACE_WIDTH env to conserve Bobcoins.
+RACE_WIDTH = int(os.getenv("RACE_WIDTH", "5"))
 
 # Bob Shell (real mode).
 # Auth is via the BOB_API_KEY env var (Scope = Inference), created from INSIDE the
