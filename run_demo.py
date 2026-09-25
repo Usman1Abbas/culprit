@@ -53,6 +53,8 @@ def main():
     trace = open(args.trace, encoding="utf-8").read() if args.trace else args.text
     card = asyncio.run(run_triage(trace))
     _print_card(card)
+    from orchestrator.bob_shell import bobcoins_spent, calls_made
+    print(f"Bobcoins this run: {bobcoins_spent():.4f} over {calls_made()} Bob calls")
     return 0
 
 

@@ -78,9 +78,17 @@ async def stream_triage(trace: str, emit: Callable[[str, Dict], None] = None) ->
         for h in hypotheses:
             _emit("hypothesis", h.to_dict())
 
-        # 2) Granite risk-ranking
+        # 2) Granite risk-ranking (guarded — a flaky watsonx response must not crash the triage;
+        #    fall back to the deterministic heuristic ranker).
         _emit("ranking_start", {})
-        ranked: List[RankedHypothesis] = granite.rank(hypotheses, summary)
+        if hypotheses:
+            try:
+                ranked: List[RankedHypothesis] = granite.rank(hypotheses, summary)
+            except Exception as e:
+                print(f"[granite ranking failed, using heuristic: {type(e).__name__}: {e}]", file=sys.stderr)
+                ranked = granite._mock_rank(hypotheses)
+        else:
+            ranked = []
         _emit("ranked", {"all_ranked": [r.to_dict() for r in ranked]})
 
         winner = ranked[0] if ranked else None
