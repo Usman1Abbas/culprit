@@ -17,11 +17,20 @@ live on ONE real open-source GitHub issue during the video.
 5. Compare Culprit's diagnosis to the issue's eventual accepted fix — if they match, that's your
    money shot for the video.
 
-## Fill in once chosen
-- Repo:
-- Issue #:
-- Trace pasted:
-- Culprit's top hypothesis:
-- Actual accepted fix:
-- Match? (Y/N):
-- Triage time:
+## Result — python-slugify (real, unfamiliar OSS repo)
+
+Ran Culprit **live** against a real third-party repo it had never seen (`github.com/un33k/python-slugify`,
+cloned fresh), pointing `REPO_ROOT` at it. Input: a genuine chained `ModuleNotFoundError` traceback
+produced by calling `slugify(b'...')` in an environment without a transliteration backend.
+
+- **Repo:** un33k/python-slugify (shallow clone)
+- **Real error:** `ModuleNotFoundError: No module named 'text_unidecode'` (chained from `unidecode`),
+  raised in `slugify/_legacy.py::_transliterate` via the auto-backend import fallback.
+- **Culprit's winning diagnosis:** the `auto` backend in `_legacy.py` (lines 51–57) tries `unidecode`,
+  falls back to `text_unidecode`, and both are absent — a missing **declared** dependency, not a
+  code logic bug. It verified against `pyproject.toml` (text-unidecode is a hard dependency) and
+  explicitly ruled out the bytes-decoding path and the `error.name` guard as sound.
+- **Suggested fix:** `pip install text-unidecode` (the package is declared but not installed).
+- **Why this matters:** Culprit correctly *avoided* inventing a code bug and identified the true
+  environmental root cause with file/line evidence and a disproof test — the hard case for a triage tool.
+- **Cost:** ~1.36 Bobcoins · 8 Bob calls (5 hypotheses + 2 critics + fix) · dual-critic CONFIRMED.
