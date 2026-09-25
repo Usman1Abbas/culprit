@@ -1,0 +1,10 @@
+# Keep Bob (and any secret-scanner) away from credentials and noise.
+.env
+.env.*
+ibm-credentials.env
+*.pem
+*_secret*
+.venv/
+__pycache__/
+.pytest_cache/
+bob_sessions/

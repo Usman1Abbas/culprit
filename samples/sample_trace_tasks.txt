@@ -1,0 +1,6 @@
+RuntimeWarning: coroutine 'enrich' was never awaited
+POST /tasks/1/process  ->  returned a coroutine, expected {"id": 1, "enriched": true}
+Traceback (most recent call last):
+  File "demo_app/tests/test_tasks.py", line 10, in test_process_task_returns_enriched_dict
+    assert isinstance(result, dict)
+AssertionError: got <coroutine object enrich> instead of dict

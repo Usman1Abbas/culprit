@@ -1,0 +1,7 @@
+POST /users  body={"name": "Ada"}  ->  500 Internal Server Error
+Traceback (most recent call last):
+  File "demo_app/app/main.py", line 39, in create_user
+    return parse_user(payload.model_dump())
+  File "demo_app/app/parsing.py", line 8, in parse_user
+    "email": payload["email"].lower(),
+AttributeError: 'NoneType' object has no attribute 'lower'

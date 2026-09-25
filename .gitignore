@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+*.log
+.DS_Store
+# never commit credentials
+*.pem
+*_secret*
+ibm-credentials.env
