@@ -1,0 +1,55 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0} html,body{margin:0;padding:0;background:#0a0a0b;width:1200px}
+.cover{width:1200px;height:630px;position:relative;overflow:hidden;
+  background:radial-gradient(700px 420px at 88% -8%, rgba(62,207,142,.16), transparent 60%),
+             radial-gradient(600px 500px at -5% 110%, rgba(62,207,142,.06), transparent 55%),#0a0a0b;
+  color:#ededf0;font-family:'Geist',system-ui,sans-serif;padding:60px 64px;display:flex;flex-direction:column}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(circle at 70% 30%,#000,transparent 75%)}
+.top{display:flex;align-items:center;gap:14px;position:relative;z-index:2}
+.mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(145deg,#3ecf8e,#2fae77);box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
+.brand{font-size:24px;font-weight:600;letter-spacing:-.02em} .brand b{color:#3ecf8e}
+.evt{margin-left:auto;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  color:#8b8b95;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 14px}
+.mid{margin-top:auto;position:relative;z-index:2}
+.kicker{font-family:'Geist Mono',monospace;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#3ecf8e;margin-bottom:18px}
+h1{font-size:66px;line-height:1.02;letter-spacing:-.035em;font-weight:600;max-width:16ch}
+h1 .g{color:#3ecf8e}
+.sub{margin-top:20px;color:#b6b6c0;font-size:19px;line-height:1.5;max-width:60ch}
+.flow{margin-top:34px;display:flex;align-items:center;gap:12px;position:relative;z-index:2}
+.node{font-family:'Geist Mono',monospace;font-size:13px;color:#dfe;border:1px solid rgba(62,207,142,.35);
+  background:rgba(62,207,142,.10);border-radius:9px;padding:9px 14px;white-space:nowrap}
+.node.mut{color:#c3c3cc;border-color:rgba(255,255,255,.14);background:rgba(255,255,255,.03)}
+.arrow{color:#5a5a63;font-size:16px}
+.bottom{margin-top:34px;display:flex;align-items:center;position:relative;z-index:2}
+.built{color:#8b8b95;font-size:15px} .built b{color:#ededf0;font-weight:500}
+.verdict{margin-left:auto;display:flex;align-items:center;gap:10px;border:1px solid rgba(62,207,142,.4);
+  background:rgba(62,207,142,.12);border-radius:12px;padding:10px 14px}
+.verdict .badge{font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#3ecf8e}
+.verdict .loc{font-family:'Geist Mono',monospace;font-size:12px;color:#cfe7db}
+</style></head><body>
+<div class="cover">
+  <div class="grid"></div>
+  <div class="top">
+    <div class="mark"></div><div class="brand">Cul<b>prit</b></div>
+    <div class="evt">IBM Bob 2.0 Hackathon</div>
+  </div>
+  <div class="mid">
+    <div class="kicker">Verifiable root-cause triage</div>
+    <h1>Find the <span class="g">culprit</span>—<br>and prove it.</h1>
+    <div class="sub">Five parallel Bob agents race competing root causes. watsonx Granite ranks them by risk.
+      Two adversarial critics try to disprove the winner — before a fix is ever suggested.</div>
+    <div class="flow">
+      <span class="node">5-agent race</span><span class="arrow">→</span>
+      <span class="node">Granite rank</span><span class="arrow">→</span>
+      <span class="node">dual critic</span><span class="arrow">→</span>
+      <span class="node">verdict</span>
+    </div>
+  </div>
+  <div class="bottom">
+    <div class="built">Built on <b>IBM Bob 2.0</b> + <b>watsonx Granite</b> · non-destructive by design</div>
+    <div class="verdict"><span class="badge">confirmed</span><span class="loc">app/pagination.py:6</span></div>
+  </div>
+</div>
+</body></html>
