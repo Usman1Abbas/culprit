@@ -376,8 +376,8 @@ $("run").onclick = async () => {
     while(true){ const {value,done}=await reader.read(); if(done)break; buf+=dec.decode(value,{stream:true});
       let idx; while((idx=buf.indexOf("\n\n"))>=0){ const chunk=buf.slice(0,idx); buf=buf.slice(idx+2);
         if(!chunk.startsWith("data:"))continue; const {kind,payload}=JSON.parse(chunk.slice(5).trim()); enqueue({kind,payload}); } }
-  }catch(e){ setError("Triage failed: "+e.message); }
-  finally{ stopTimer(); $("run").disabled=false; }
+  }catch(e){ stopTimer(); setError("Triage failed: "+e.message); }
+  finally{ $("run").disabled=false; }
 };
 
 function handle(kind,p){
@@ -387,7 +387,8 @@ function handle(kind,p){
   else if(kind==="ranked"){ buildCards(p.all_ranked); $("agentCount").textContent=p.all_ranked.length; setStep("rank","done"); }
   else if(kind==="critic_start"){ setBusy("Two adversarial critics attempting to disprove…"); setStep("critic","active"); }
   else if(kind==="critic"||kind==="critic_failed"){ setStep("critic","done"); setStep("fix","active"); }
-  else if(kind==="done"){ setStep("fix","done"); $("timer").textContent=p.triage_seconds+"s";
+  else if(kind==="done"){ setStep("fix","done"); stopTimer();
+    $("timer").textContent=((performance.now()-t0)/1000).toFixed(1)+"s";
     if(p.bobcoins!=null)$("coins").textContent=(+p.bobcoins).toFixed(2); showVerdict(p); setDone("Triage complete."); }
 }
 
