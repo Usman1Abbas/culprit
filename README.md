@@ -1,67 +1,136 @@
-# Culprit — verifiable root-cause triage for inherited code
+<p align="center">
+  <img src="assets/cover.png" alt="Culprit — verifiable root-cause triage" width="100%">
+</p>
 
-> IBM Bob 2.0 Hackathon (Sep 25–27, 2026) · solo build
+<h1 align="center">Culprit — Verifiable Root-Cause Triage for Inherited Code</h1>
 
-**The expensive part of a bug isn't the fix — it's the triage.** Finding *which* of several
-plausible causes is the real one eats hours of reading unfamiliar code. Autofix tools (and Bob's
-stock quick-fix / PR generation) jump straight to a patch. **Culprit makes the diagnosis
-trustworthy first.**
+<p align="center"><em>Find the culprit — and prove it — before suggesting a fix.</em></p>
 
-## How it works
+<p align="center">
+  <img alt="status" src="https://img.shields.io/badge/status-MVP%20working-1b9c85">
+  <img alt="engine" src="https://img.shields.io/badge/engine-IBM%20Bob%202.0-0d1b2a">
+  <img alt="ranking" src="https://img.shields.io/badge/ranking-watsonx%20Granite-125a4d">
+  <img alt="backend" src="https://img.shields.io/badge/backend-FastAPI%20%2B%20SSE-1b9c85">
+  <img alt="tests" src="https://img.shields.io/badge/tests-25%20passing-2fae77">
+  <img alt="license" src="https://img.shields.io/badge/license-MIT-blue">
+</p>
 
-1. Paste a stack trace / failing CI log / GitHub issue.
-2. The orchestrator (**Bob Shell**) fans out **N parallel subagents**, each committed to a
-   *different* root-cause hypothesis — a genuine race, not sequential guessing.
-3. A **watsonx.ai Granite** agent ranks the surviving hypotheses by risk / blast-radius.
-4. An **adversarial critic subagent** tries to *disprove* the top hypothesis (writes a test that
-   should fail if it's right) before anything is shown to the user.
-5. Output: a ranked, evidence-backed **diagnosis card** — culprit location, why, confidence, and
-   the disproof-test result. The fix is a byproduct shown last, never the headline.
+Culprit turns a stack trace into a **trustworthy diagnosis**. Paste a failure and five independent
+**IBM Bob** agents race competing root-cause hypotheses; **watsonx Granite** ranks them by risk; two
+adversarial critics try to *disprove* the winner and write a failing test. You get a ranked,
+evidence-backed verdict — culprit file/line, a disproof test, and a fix — **the fix is a byproduct,
+shown only after the diagnosis survives scrutiny**. Built for the on-call engineer paged at 2 a.m.
+against a service they didn't write.
 
-The headline metric is **triage time**, not "PR opened."
+> Built for the **IBM Bob 2.0 Hackathon** — improving the **debugging / incident-response** developer workflow.
 
-## Why this is different from Bob's stock features / Devin / Sweep
+## 📸 Screenshots
 
-Bob already does bug-fix + PR natively. Culprit does *not* touch that. Its value is the
-**triage reasoning + verification** layer — parallel competing hypotheses, Granite risk-ranking,
-and an adversarial disproof loop — which neither Bob's stock features nor the SWE-agent genre do.
+<p align="center"><img src="assets/verdict_card.png" alt="Culprit diagnosis card — CONFIRMED verdict, culprit file/line, risk meter, dual-critic passes, disproof test" width="85%"></p>
+<p align="center"><img src="assets/bob_sessions.png" alt="Real IBM Bob usage — 125 tasks, 19.69 Bobcoins" width="85%"></p>
 
-## Run it (mock mode — zero Bobcoins)
+---
 
+## Why it's different
+- **Autonomous fixers** (Devin, Sweep, Copilot Workspace) — and Bob's own stock quick-fix / PR —
+  jump straight to a patch. A fix you can't trust is worse than no fix.
+- **Culprit is a triage engine, not a fix bot.** Its value is the *reasoning + verification* layer:
+  competing hypotheses, model-graded ranking, and an adversarial disproof loop.
+- **Proven on unfamiliar real code:** pointed at the open-source `python-slugify` repo with a real
+  `ModuleNotFoundError`, Culprit correctly identified a **missing declared dependency** and *refused
+  to invent a code bug*, verifying the library's logic against `pyproject.toml`. Not hallucinating is
+  the hard part.
+- **Non-destructive by design:** every agent runs against a throwaway copy of the repo, so the real
+  working tree is never modified.
+
+## Architecture
+
+The pipeline is one async function, [`stream_triage()`](orchestrator/triage.py), driving four stages
+and streaming Server-Sent Events to the live UI. Full write-up + diagram: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+1. **Parallel hypothesis race** — [`orchestrator/hypotheses.py`](orchestrator/hypotheses.py) launches
+   **5 concurrent `bob run` agents**, one per angle (logic · validation · data/state · concurrency ·
+   contract). Each is an independent Bob agent with full repository context.
+2. **Granite risk-ranking** — [`orchestrator/granite.py`](orchestrator/granite.py) scores hypotheses
+   by risk / blast-radius via **watsonx.ai Granite** (`ibm/granite-4-h-small`), with a deterministic
+   heuristic fallback so a flaky call never breaks a demo.
+3. **Dual adversarial critic** — [`orchestrator/critic.py`](orchestrator/critic.py) runs **two** Bob
+   critics in parallel (isolation + alternative-cause); the winner survives only if neither disproves it.
+4. **Diagnosis card** — culprit file/line, the disproof test, and a suggested fix (a byproduct).
+
+That's **8 Bob calls per triage** (5 agents + 2 critics + 1 fix). Parallelism is at the process level —
+each `bob run` is a genuine independent Bob agent — because Bob auto-selects its own model and its
+internal subagents aren't user-forceable.
+
+---
+
+## Run it
+
+Single service (FastAPI serves the UI **and** the SSE triage stream). **Mock mode is the default** —
+canned-but-correct pipeline, zero Bobcoins, instant, fully self-contained.
+
+### Mock mode (free, instant — great for the demo)
 ```bash
-python -m venv .venv && . .venv/Scripts/activate   # Windows PowerShell: .venv\Scripts\Activate.ps1
+python -m venv .venv
+# Windows:
+.venv\Scripts\activate
+# macOS/Linux:
+# source .venv/bin/activate
 pip install -r requirements.txt
 
-# 1) See the "patient" repo fail (red):
-pytest demo_app -q
+python -m ui.server          # or on Windows:  .\run_ui.ps1 -Mock
+```
+Open **http://127.0.0.1:8000**, click a sample chip (Pagination / Null-email / Async / Real repo ·
+slugify), and hit **Run triage**.
 
-# 2) Run triage on a sample trace from the CLI:
+### Live mode (real IBM Bob + watsonx Granite)
+Requires **Bob Shell** installed (`irm https://bob.ibm.com/download/bobshell.ps1 | iex`), an
+Inference-scoped `BOB_API_KEY`, and watsonx credentials.
+```bash
+cp .env.example .env         # set BOB_API_KEY, WATSONX_API_KEY, WATSONX_PROJECT_ID, MOCK_MODE=0
+.\run_ui.ps1                 # Windows launcher: loads key + PATH, forces the correct Granite model
+```
+
+### CLI
+```bash
 python run_demo.py --trace samples/sample_trace_pagination.txt
-
-# 3) Launch the 3-screen demo UI:
-python -m ui.server           # then open http://127.0.0.1:8000
 ```
 
-Everything runs in `MOCK_MODE=1` (the default) with canned-but-plausible agent output, so the full
-golden path demos before you spend a single Bobcoin. Flip to real Bob Shell + Granite by setting
-env vars (see `.env.example`) and `MOCK_MODE=0`.
+---
 
-## Layout
+## Demo script (4 samples, one continuous flow)
+1. **Pagination bug** → off-by-one in `paginate()` (`page*per_page` on a 1-indexed API).
+2. **Null-email bug** → unguarded `.lower()` on an optional field.
+3. **Async bug** → missing `await` returning a coroutine instead of a dict.
+4. **Real repo · slugify** → a real unfamiliar library crash; Culprit finds the *missing dependency*
+   and refuses to invent a code bug.
 
-```
-demo_app/        the buggy FastAPI service under test (the "patient") + failing pytest suite
-orchestrator/    the triage engine: bob_shell wrapper, hypothesis agents, granite ranker, critic
-  prompts/       the actual prompt templates each subagent runs
-ui/              3-screen streaming demo (paste trace -> hypothesis race -> verdict + timer)
-samples/         sample traces + notes on the real GitHub issue to prove generalization
-bob_sessions/    <-- REQUIRED at submission: Bob task-session summary screenshots go here
-```
+Each run: 5 agents race → Granite ranks → two critics confirm → verdict card. Same pipeline, zero config.
 
-## Submission checklist (see SUBMISSION.md)
-- [ ] Public repo (fork the IBM template, keep .bobignore)
-- [ ] 3-min video, ≥90s live on screen, demo up front
-- [ ] Deployed app URL
-- [ ] `bob_sessions/` screenshots (solo = at least 1)
-- [ ] Problem/Solution ≤500 words + Bob Usage statement ≤500 words
-- [ ] Prove on ≥1 REAL open-source GitHub issue
-- [ ] Fill the post-hackathon feedback form (the extra $100)
+## How IBM Bob is used
+- **As the runtime engine** — every triage is 8 headless `bob run` calls (`bob run --format json`),
+  the race + dual critic + fix. Bob's full-repo context lets each agent read unfamiliar code and cite
+  the offending lines.
+- **As a coding assistant** — Bob agent mode authored the deployment config, the orchestrator test
+  suite, and the architecture docs (see commit history).
+- **Verified usage:** 125 Bob tasks · 19.69 Bobcoins across the build — see [`bob_sessions/`](bob_sessions/).
+
+## Configuration
+- `MOCK_MODE` — `1` (default): canned pipeline, no Bob/secrets. `0`: real Bob Shell + watsonx.
+- `RACE_WIDTH` — number of parallel hypothesis agents (default `5`).
+- `BOB_API_KEY` — Inference-scoped key created inside the hackathon Bob instance (never committed).
+- `WATSONX_API_KEY` / `WATSONX_PROJECT_ID` / `GRANITE_MODEL_ID` — for the ranking stage.
+- `SANDBOX` — `1` (default): run agents against a throwaway repo copy. See [`.env.example`](.env.example).
+
+## Verified
+- `pytest` → **25 orchestrator tests** (parsing, scenario detection, ranking, end-to-end mock triage).
+- Real-issue proof: [`samples/real_issue_notes.md`](samples/real_issue_notes.md).
+- Bob usage evidence: [`bob_sessions/`](bob_sessions/) (Bobalytics dashboards + per-task ledger).
+
+## Roadmap
+- Wire Culprit into CI so a red build auto-opens a triage before a human looks.
+- A GitHub App: comment a diagnosis + disproof test on failing PRs.
+- Persist diagnoses to learn recurring root-cause patterns per repo.
+- Confidence-gated auto-fix PRs — only after the dual critic clears a threshold.
+
+<p align="center"><sub>Built on IBM Bob 2.0 + watsonx Granite · MIT License</sub></p>
