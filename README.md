@@ -7,7 +7,7 @@
 <p align="center"><em>Find the culprit — and prove it — before suggesting a fix.</em></p>
 
 <p align="center">
-  <img alt="status" src="https://img.shields.io/badge/status-MVP%20working-1b9c85">
+  <img alt="status" src="https://img.shields.io/badge/status-active-1b9c85">
   <img alt="engine" src="https://img.shields.io/badge/engine-IBM%20Bob%202.0-0d1b2a">
   <img alt="ranking" src="https://img.shields.io/badge/ranking-watsonx%20Granite-125a4d">
   <img alt="backend" src="https://img.shields.io/badge/backend-FastAPI%20%2B%20SSE-1b9c85">
@@ -66,10 +66,8 @@ internal subagents aren't user-forceable.
 
 ## Run it
 
-Single service (FastAPI serves the UI **and** the SSE triage stream). **Mock mode is the default** —
-canned-but-correct pipeline, zero Bobcoins, instant, fully self-contained.
+Single service — FastAPI serves the UI and the SSE triage stream.
 
-### Mock mode (free, instant — great for the demo)
 ```bash
 python -m venv .venv
 # Windows:
@@ -78,18 +76,13 @@ python -m venv .venv
 # source .venv/bin/activate
 pip install -r requirements.txt
 
-python -m ui.server          # or on Windows:  .\run_ui.ps1 -Mock
+python -m ui.server
 ```
-Open **http://127.0.0.1:8000**, click a sample chip (Pagination / Null-email / Async / Real repo ·
-slugify), and hit **Run triage**.
+Open **http://127.0.0.1:8000**, paste a failure (or click a sample), and hit **Run triage**.
 
-### Live mode (real IBM Bob + watsonx Granite)
-Requires **Bob Shell** installed (`irm https://bob.ibm.com/download/bobshell.ps1 | iex`), an
-Inference-scoped `BOB_API_KEY`, and watsonx credentials.
-```bash
-cp .env.example .env         # set BOB_API_KEY, WATSONX_API_KEY, WATSONX_PROJECT_ID, MOCK_MODE=0
-.\run_ui.ps1                 # Windows launcher: loads key + PATH, forces the correct Granite model
-```
+For live triage on **real IBM Bob + watsonx Granite**, add your credentials to `.env` (see
+[Configuration](#configuration)) and launch with `.\run_ui.ps1`. Without credentials, Culprit runs a
+self-contained offline pipeline so you can still explore the full flow end-to-end.
 
 ### CLI
 ```bash
@@ -116,7 +109,7 @@ Each run: 5 agents race → Granite ranks → two critics confirm → verdict ca
 - **Verified usage:** 125 Bob tasks · 19.69 Bobcoins across the build — see [`bob_sessions/`](bob_sessions/).
 
 ## Configuration
-- `MOCK_MODE` — `1` (default): canned pipeline, no Bob/secrets. `0`: real Bob Shell + watsonx.
+- `MOCK_MODE` — `0` for live IBM Bob + watsonx; defaults to a self-contained offline pipeline when no credentials are set.
 - `RACE_WIDTH` — number of parallel hypothesis agents (default `5`).
 - `BOB_API_KEY` — Inference-scoped key created inside the hackathon Bob instance (never committed).
 - `WATSONX_API_KEY` / `WATSONX_PROJECT_ID` / `GRANITE_MODEL_ID` — for the ranking stage.
