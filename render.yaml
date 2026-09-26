@@ -6,3 +6,7 @@ services:
     envVars:
       - key: PORT
         value: 10000
+      # Public demo runs self-contained (canned pipeline, no Bob CLI / secrets needed).
+      # Live Bob runs happen locally, not on the hosted URL.
+      - key: MOCK_MODE
+        value: "1"
