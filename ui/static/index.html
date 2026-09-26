@@ -21,153 +21,143 @@
 *{box-sizing:border-box}
 html,body{margin:0}
 body{
-  background:
-    radial-gradient(900px 500px at 85% -10%, rgba(62,207,142,.06), transparent 60%),
-    var(--bg);
-  color:var(--txt); font-family:var(--sans); font-size:15px; line-height:1.55;
-  -webkit-font-smoothing:antialiased;
+  background:radial-gradient(900px 500px at 85% -10%, rgba(62,207,142,.06), transparent 60%),var(--bg);
+  color:var(--txt); font-family:var(--sans); font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
 }
-
-/* header */
-header{
-  display:flex; align-items:center; gap:14px;
-  padding:16px clamp(16px,4vw,40px);
-  border-bottom:1px solid var(--line);
-  position:sticky; top:0; z-index:20;
-  background:rgba(10,10,11,.72); backdrop-filter:blur(12px);
-}
-.mark{width:22px;height:22px;border-radius:7px;
-  background:linear-gradient(145deg,var(--accent),#2fae77);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.25);}
+header{display:flex;align-items:center;gap:14px;padding:16px clamp(16px,4vw,40px);
+  border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;
+  background:rgba(10,10,11,.72);backdrop-filter:blur(12px)}
+.mark{width:22px;height:22px;border-radius:7px;background:linear-gradient(145deg,var(--accent),#2fae77);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
 .brand{font-weight:600;letter-spacing:-.02em;font-size:16px}
 .brand b{color:var(--accent);font-weight:600}
 .tagline{color:var(--muted);font-size:13px;letter-spacing:-.01em}
 .spacer{margin-left:auto}
-.pill{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);
-  font-size:11px;letter-spacing:.04em;color:var(--muted);
-  border:1px solid var(--line-2);border-radius:999px;padding:5px 11px;text-transform:uppercase}
+.pill{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;letter-spacing:.04em;
+  color:var(--muted);border:1px solid var(--line-2);border-radius:999px;padding:5px 11px;text-transform:uppercase}
 .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--faint)}
 .pill.live .dot{background:var(--accent);box-shadow:0 0 0 3px var(--accent-dim);animation:breathe 2.4s var(--ease) infinite}
 .pill.mock .dot{background:var(--warn)}
 
-/* layout */
 main{max-width:1240px;margin:0 auto;padding:clamp(16px,3vw,28px);
   display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:22px;align-items:start}
 @media(max-width:860px){main{grid-template-columns:1fr}}
 
-/* left control rail */
 .rail{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
 @media(max-width:860px){.rail{position:static}}
-.label{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--faint);margin:0 0 9px}
-textarea{width:100%;min-height:150px;resize:vertical;
-  background:var(--panel);color:var(--txt);border:1px solid var(--line);border-radius:12px;
-  padding:13px 14px;font-family:var(--mono);font-size:12.5px;line-height:1.6;
-  transition:border-color .2s var(--ease),box-shadow .2s var(--ease)}
-textarea:focus{outline:none;border-color:var(--line-2);
-  box-shadow:0 0 0 3px rgba(255,255,255,.04)}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin:0 0 9px}
+textarea{width:100%;min-height:150px;resize:vertical;background:var(--panel);color:var(--txt);
+  border:1px solid var(--line);border-radius:12px;padding:13px 14px;
+  font-family:var(--mono);font-size:12.5px;line-height:1.6;transition:border-color .2s var(--ease),box-shadow .2s var(--ease)}
+textarea:focus{outline:none;border-color:var(--line-2);box-shadow:0 0 0 3px rgba(255,255,255,.04)}
 textarea::placeholder{color:var(--faint)}
-
 .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}
-.chip{font-size:12.5px;color:var(--muted);background:var(--panel);
-  border:1px solid var(--line);border-radius:8px;padding:7px 11px;cursor:pointer;
-  transition:all .18s var(--ease)}
+.chip{font-size:12.5px;color:var(--muted);background:var(--panel);border:1px solid var(--line);
+  border-radius:8px;padding:7px 11px;cursor:pointer;transition:all .18s var(--ease)}
 .chip:hover{color:var(--txt);border-color:var(--line-2);background:var(--panel-2)}
 .chip:active{transform:translateY(1px)}
-
-.run{margin-top:14px;width:100%;border:0;cursor:pointer;
-  background:var(--accent);color:#06231a;font-family:var(--sans);font-weight:600;font-size:14.5px;
-  border-radius:11px;padding:13px 16px;letter-spacing:-.01em;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.3);
-  transition:filter .18s var(--ease),transform .12s var(--ease)}
-.run:hover{filter:brightness(1.06)}
-.run:active{transform:translateY(1px)}
+.run{margin-top:14px;width:100%;border:0;cursor:pointer;background:var(--accent);color:#06231a;
+  font-family:var(--sans);font-weight:600;font-size:14.5px;border-radius:11px;padding:13px 16px;letter-spacing:-.01em;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3);transition:filter .18s var(--ease),transform .12s var(--ease)}
+.run:hover{filter:brightness(1.06)} .run:active{transform:translateY(1px)}
 .run:disabled{opacity:.5;cursor:default;filter:none}
+.run .kbd{font-family:var(--mono);font-size:10px;opacity:.6;margin-left:6px}
 
-/* metrics */
-.metrics{border:1px solid var(--line);border-radius:12px;background:var(--panel);
-  divide:var(--line)}
-.metric{display:flex;align-items:baseline;justify-content:space-between;
-  padding:11px 14px;border-bottom:1px solid var(--line)}
+.metrics{border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.metric{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-bottom:1px solid var(--line)}
 .metric:last-child{border-bottom:0}
-.metric .k{color:var(--muted);font-size:12.5px}
-.metric .v{font-family:var(--mono);font-size:15px;color:var(--txt)}
-.metric .v.accent{color:var(--accent)}
-.statusline{display:flex;align-items:center;gap:8px;color:var(--muted);
-  font-size:12.5px;min-height:18px;padding:2px 2px 0}
+.metric .k{color:var(--muted);font-size:12.5px} .metric .k .cap{display:block;color:var(--faint);font-size:10px;margin-top:1px}
+.metric .v{font-family:var(--mono);font-size:15px;color:var(--txt)} .metric .v.accent{color:var(--accent)}
+.statusline{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12.5px;min-height:18px;padding:2px 2px 0}
 .statusline .dot{width:7px;height:7px;border-radius:50%;background:var(--faint);flex:none}
 .statusline.busy .dot{background:var(--warn);animation:breathe 1.4s var(--ease) infinite}
 .statusline.done .dot{background:var(--accent)}
 
-/* right pipeline */
 .stage{min-width:0}
 .stage-head{display:flex;align-items:center;gap:12px;margin:2px 0 14px}
 .stage-head h2{font-size:14px;font-weight:600;letter-spacing:-.01em;margin:0}
 .stepper{margin-left:auto;display:flex;align-items:center;gap:6px}
-.step{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;
-  color:var(--faint);text-transform:uppercase;letter-spacing:.05em}
+.step{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.05em}
 .step i{width:6px;height:6px;border-radius:50%;background:var(--faint);font-style:normal;transition:all .3s var(--ease)}
-.step.active i{background:var(--warn);box-shadow:0 0 0 3px rgba(230,180,80,.15)}
-.step.active{color:var(--muted)}
+.step.active i{background:var(--warn);box-shadow:0 0 0 3px rgba(230,180,80,.15)} .step.active{color:var(--muted)}
 .step.done i{background:var(--accent)}
 .step .sep{width:14px;height:1px;background:var(--line-2)}
 @media(max-width:560px){.stepper{display:none}}
 
-/* empty state */
-.empty{border:1px dashed var(--line-2);border-radius:16px;padding:48px 24px;text-align:center;
-  color:var(--muted)}
+.empty{border:1px dashed var(--line-2);border-radius:16px;padding:48px 24px;text-align:center;color:var(--muted)}
 .empty .big{color:var(--txt);font-weight:500;font-size:16px;letter-spacing:-.01em;margin-bottom:6px}
-.empty .sub{font-size:13px;max-width:42ch;margin:0 auto}
+.empty .sub{font-size:13px;max-width:44ch;margin:0 auto}
 
-/* hypothesis cards */
+/* race lanes */
+.lanes-wrap{margin-bottom:16px}
+.lanes-head{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.lanes-head .t{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.lanes-head .count{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.lanes{display:flex;flex-wrap:wrap;gap:8px}
+.lane{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:9px;
+  padding:8px 12px;background:var(--panel);font-size:12.5px;color:var(--muted);transition:all .3s var(--ease)}
+.lane .ld{width:8px;height:8px;border-radius:50%;background:var(--faint);flex:none}
+.lane.running .ld{background:var(--warn);animation:breathe 1s var(--ease) infinite}
+.lane.running{color:var(--txt);border-color:var(--line-2)}
+.lane.done .ld{background:var(--accent)} .lane.done{color:var(--txt);border-color:rgba(62,207,142,.35)}
+.lane .chk{color:var(--accent);font-family:var(--mono);font-size:12px;opacity:0;transition:opacity .3s var(--ease)}
+.lane.done .chk{opacity:1}
+
 .hyps{display:flex;flex-direction:column;gap:10px}
-.hyp{border:1px solid var(--line);border-radius:14px;background:var(--panel);
-  padding:14px 16px;opacity:0;transform:translateY(8px);
-  animation:rise .5s var(--ease) forwards;animation-delay:calc(var(--i,0)*90ms)}
-.hyp.winner{border-color:rgba(62,207,142,.5);background:linear-gradient(180deg,var(--accent-dim),transparent 60%),var(--panel);
-  box-shadow:0 1px 0 rgba(62,207,142,.12) inset}
+.hyp{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:14px 16px;
+  opacity:0;transform:translateY(8px);animation:rise .5s var(--ease) forwards;animation-delay:calc(var(--i,0)*80ms)}
+.hyp.winner{border-color:rgba(62,207,142,.5);
+  background:linear-gradient(180deg,var(--accent-dim),transparent 60%),var(--panel);box-shadow:0 1px 0 rgba(62,207,142,.12) inset}
 .hyp .top{display:flex;align-items:center;gap:10px}
-.score{font-family:var(--mono);font-size:13px;color:var(--muted);background:var(--panel-2);
-  border:1px solid var(--line);border-radius:7px;padding:3px 9px;min-width:52px;text-align:center;flex:none}
+.score{font-family:var(--mono);font-size:13px;color:var(--muted);background:var(--panel-2);border:1px solid var(--line);
+  border-radius:7px;padding:3px 9px;min-width:52px;text-align:center;flex:none}
 .hyp.winner .score{color:var(--accent);border-color:rgba(62,207,142,.4);background:var(--accent-dim)}
 .hyp .title{font-weight:500;letter-spacing:-.01em;font-size:14px}
-.tag{margin-left:auto;flex:none;font-family:var(--mono);font-size:10px;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--accent);border:1px solid rgba(62,207,142,.4);
-  border-radius:999px;padding:2px 9px}
+.tag{margin-left:auto;flex:none;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--accent);border:1px solid rgba(62,207,142,.4);border-radius:999px;padding:2px 9px}
 .loc{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin-top:7px}
 .loc b{color:var(--muted);font-weight:500}
 .reason{color:#c3c3cc;font-size:13px;line-height:1.6;margin-top:9px}
 
-/* skeleton */
-.skel{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:14px 16px}
-.skel .bar{height:12px;border-radius:6px;background:
-  linear-gradient(90deg,var(--panel-2) 0%,var(--raise) 50%,var(--panel-2) 100%);
-  background-size:200% 100%;animation:shimmer 1.3s linear infinite}
-.skel .bar.s1{width:62%}
-.skel .bar.s2{width:38%;margin-top:11px;height:10px}
-
 /* verdict */
 .verdict-wrap{margin-top:22px}
-.verdict{border-radius:14px;padding:16px;border:1px solid var(--line);background:var(--panel)}
+.verdict{border-radius:14px;padding:18px;border:1px solid var(--line);background:var(--panel)}
 .verdict.ok{border-color:rgba(62,207,142,.45);background:linear-gradient(180deg,var(--accent-dim),transparent 55%),var(--panel)}
 .verdict.bad{border-color:rgba(242,119,122,.45);background:linear-gradient(180deg,var(--danger-dim),transparent 55%),var(--panel)}
-.verdict .vhead{display:flex;align-items:center;gap:9px;font-weight:600;letter-spacing:-.01em}
-.verdict .vhead .badge{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
-  padding:3px 9px;border-radius:999px}
+.vhead{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.vhead .badge{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:999px}
 .ok .badge{color:var(--accent);border:1px solid rgba(62,207,142,.4);background:var(--accent-dim)}
 .bad .badge{color:var(--danger);border:1px solid rgba(242,119,122,.4);background:var(--danger-dim)}
-.verdict .vbody{color:#c3c3cc;font-size:13px;line-height:1.65;margin-top:10px}
-pre.code{margin:11px 0 0;background:#0c0c0e;border:1px solid var(--line);border-radius:10px;
-  padding:12px 13px;overflow-x:auto;font-family:var(--mono);font-size:12px;color:#cfe7db;line-height:1.6}
-.fix{margin-top:12px;font-size:13px;color:var(--muted)}
+.vhead .vtitle{font-weight:600;letter-spacing:-.01em;font-size:15px}
+.culprit{margin-top:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.culprit .k{color:var(--faint);font-size:11px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.chipfile{font-family:var(--mono);font-size:12px;color:#cfe7db;background:#0c0c0e;border:1px solid var(--line);border-radius:6px;padding:3px 8px}
+.meter{margin-top:12px}
+.meter .mlabel{display:flex;justify-content:space-between;font-size:11px;color:var(--faint);font-family:var(--mono);margin-bottom:5px}
+.meter .track{height:7px;border-radius:5px;background:var(--panel-2);border:1px solid var(--line);overflow:hidden}
+.meter .fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),#2fae77);border-radius:5px;transition:width .8s var(--ease)}
+.passes{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.pass{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#0e0e12}
+.pass .pi{flex:none;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:11px;margin-top:1px}
+.pass.ok .pi{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(62,207,142,.4)}
+.pass.bad .pi{background:var(--danger-dim);color:var(--danger);border:1px solid rgba(242,119,122,.4)}
+.pass .pl{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:3px}
+.pass .pt{font-size:12.5px;color:#c3c3cc;line-height:1.55}
+.codeblock{margin-top:14px;position:relative}
+.codeblock .clabel{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);margin-bottom:6px}
+pre.code{margin:0;background:#0c0c0e;border:1px solid var(--line);border-radius:10px;padding:12px 13px;overflow-x:auto;
+  font-family:var(--mono);font-size:12px;color:#cfe7db;line-height:1.6}
+.copy{position:absolute;top:26px;right:8px;background:var(--panel-2);border:1px solid var(--line-2);color:var(--muted);
+  font-family:var(--mono);font-size:10px;border-radius:6px;padding:4px 8px;cursor:pointer;transition:all .15s var(--ease)}
+.copy:hover{color:var(--txt)} .copy:active{transform:translateY(1px)}
+.copy.done{color:var(--accent);border-color:rgba(62,207,142,.4)}
+.fix{margin-top:14px;position:relative;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
 .fix b{color:var(--txt);font-weight:500}
-.fix code{font-family:var(--mono);font-size:12px;background:var(--panel-2);border:1px solid var(--line);
-  border-radius:5px;padding:1px 6px;color:#cfe7db}
+.fix code{font-family:var(--mono);font-size:12px;background:var(--panel-2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:#cfe7db}
 
 .hidden{display:none}
-
 @keyframes rise{to{opacity:1;transform:none}}
-@keyframes shimmer{to{background-position:-200% 0}}
 @keyframes breathe{0%,100%{opacity:1}50%{opacity:.35}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.hyp{opacity:1;transform:none}}
 </style>
@@ -175,16 +165,13 @@ pre.code{margin:11px 0 0;background:#0c0c0e;border:1px solid var(--line);border-
 <body>
 <header>
   <div class="mark"></div>
-  <div>
-    <div class="brand">Cul<b>prit</b></div>
-  </div>
+  <div class="brand">Cul<b>prit</b></div>
   <div class="tagline">verifiable root-cause triage · IBM Bob 2.0</div>
   <div class="spacer"></div>
   <span class="pill" id="modePill"><span class="dot"></span><span id="modeText">connecting</span></span>
 </header>
 
 <main>
-  <!-- control rail -->
   <section class="rail">
     <div>
       <p class="label">Failure input</p>
@@ -194,11 +181,11 @@ pre.code{margin:11px 0 0;background:#0c0c0e;border:1px solid var(--line);border-
         <button class="chip" data-sample="parsing">Null-email bug</button>
         <button class="chip" data-sample="tasks">Async bug</button>
       </div>
-      <button class="run" id="run">Run triage</button>
+      <button class="run" id="run">Run triage <span class="kbd">⌘/Ctrl+↵</span></button>
     </div>
 
     <div class="metrics">
-      <div class="metric"><span class="k">Triage time</span><span class="v" id="timer">0.0s</span></div>
+      <div class="metric"><span class="k">Triage time<span class="cap">vs ~2h manual triage</span></span><span class="v" id="timer">0.0s</span></div>
       <div class="metric"><span class="k">Hypotheses raced</span><span class="v" id="agentCount">—</span></div>
       <div class="metric"><span class="k">Bobcoins</span><span class="v accent" id="coins">0.00</span></div>
     </div>
@@ -206,7 +193,6 @@ pre.code{margin:11px 0 0;background:#0c0c0e;border:1px solid var(--line);border-
     <div class="statusline" id="statusline"><span class="dot"></span><span id="status">Idle — paste a failure to begin.</span></div>
   </section>
 
-  <!-- pipeline -->
   <section class="stage">
     <div class="stage-head">
       <h2>Diagnosis pipeline</h2>
@@ -220,210 +206,178 @@ pre.code{margin:11px 0 0;background:#0c0c0e;border:1px solid var(--line);border-
 
     <div class="empty" id="empty">
       <div class="big">No triage running</div>
-      <p class="sub">Load a sample or paste a real failure, then run triage. Independent Bob agents
-        race competing root-cause hypotheses; Granite ranks them by risk; an adversarial critic
-        tries to disprove the winner before it's shown.</p>
+      <p class="sub">Load a sample or paste a real failure, then run triage. Five independent Bob agents
+        race competing root-cause hypotheses; Granite ranks them by risk; two adversarial critics try
+        to disprove the winner before it's shown.</p>
+    </div>
+
+    <div class="lanes-wrap hidden" id="lanesWrap">
+      <div class="lanes-head"><span class="t">Parallel Bob agents</span><span class="count" id="raceCount">0 / 5 reported</span></div>
+      <div class="lanes" id="lanes"></div>
     </div>
 
     <div class="hyps hidden" id="hyps"></div>
 
     <div class="verdict-wrap hidden" id="verdictWrap">
       <div class="verdict" id="verdict"></div>
-      <div class="fix" id="fix"></div>
     </div>
   </section>
 </main>
 
 <script>
 const $ = (id) => document.getElementById(id);
+const ANGLES = ["h1","h2","h3","h4","h5"];
+const ANGLE_LABEL = {h1:"Logic", h2:"Validation", h3:"Data / State", h4:"Concurrency", h5:"Contract"};
 const SAMPLES = {
-  pagination: `AssertionError: GET /tasks?page=1 returned items 11-20, expected items 1-10
+  pagination:`AssertionError: GET /tasks?page=1 returned items 11-20, expected items 1-10
 Traceback (most recent call last):
   File "demo_app/app/main.py", line 22, in list_tasks
     return {"page": page, "items": paginate(_TASKS, page, per_page)}
   File "demo_app/app/pagination.py", line 6, in paginate
     start = page * per_page`,
-  parsing: `POST /users  body={"name": "Ada"}  ->  500 Internal Server Error
+  parsing:`POST /users  body={"name": "Ada"}  ->  500 Internal Server Error
 Traceback (most recent call last):
   File "demo_app/app/main.py", line 39, in create_user
     return parse_user(payload.model_dump())
   File "demo_app/app/parsing.py", line 8, in parse_user
     "email": payload["email"].lower(),
 AttributeError: 'NoneType' object has no attribute 'lower'`,
-  tasks: `RuntimeWarning: coroutine 'enrich' was never awaited
+  tasks:`RuntimeWarning: coroutine 'enrich' was never awaited
 POST /tasks/1/process  ->  returned a coroutine, expected {"id": 1, "enriched": true}
 Traceback (most recent call last):
   File "demo_app/tests/test_tasks.py", line 10, in test_process_task_returns_enriched_dict
     assert isinstance(result, dict)
 AssertionError: got <coroutine object enrich> instead of dict`,
 };
+document.querySelectorAll("[data-sample]").forEach(b => b.onclick = () => { $("trace").value = SAMPLES[b.dataset.sample]; });
 
-document.querySelectorAll("[data-sample]").forEach(btn => {
-  btn.onclick = () => { $("trace").value = SAMPLES[btn.dataset.sample]; };
-});
-
-// mode pill
-fetch("/config").then(r => r.json()).then(c => {
-  const p = $("modePill");
-  p.classList.add(c.mock ? "mock" : "live");
+fetch("/config").then(r=>r.json()).then(c=>{
+  const p=$("modePill"); p.classList.add(c.mock?"mock":"live");
   $("modeText").textContent = c.mock ? "mock · 0 coins" : "live · Bob";
-}).catch(() => { $("modeText").textContent = "offline"; });
+}).catch(()=>{ $("modeText").textContent="offline"; });
 
-// timer
-let timerId = null, t0 = 0;
-const setStep = (name, cls) => {
-  const el = document.querySelector(`.step[data-step="${name}"]`);
-  if (el) { el.classList.remove("active","done"); if (cls) el.classList.add(cls); }
-};
-function startTimer(){ t0 = performance.now(); timerId = setInterval(() => {
-  $("timer").textContent = ((performance.now()-t0)/1000).toFixed(1)+"s";
-}, 100); }
+function esc(s){ return (s||"").replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+let timerId=null,t0=0;
+function startTimer(){ t0=performance.now(); timerId=setInterval(()=>{ $("timer").textContent=((performance.now()-t0)/1000).toFixed(1)+"s"; },100); }
 function stopTimer(){ clearInterval(timerId); }
+const setStep=(n,c)=>{ const e=document.querySelector(`.step[data-step="${n}"]`); if(e){e.classList.remove("active","done"); if(c)e.classList.add(c);} };
+function setBusy(m){ const s=$("statusline"); s.className="statusline busy"; $("status").textContent=m; }
+function setDone(m){ const s=$("statusline"); s.className="statusline done"; $("status").textContent=m; }
+function setError(m){ const s=$("statusline"); s.className="statusline"; s.querySelector(".dot").style.background="var(--danger)"; $("status").textContent=m; }
+function countUp(el,target){ const st=performance.now(),dur=550; (function tick(now){ const p=Math.min(1,(now-st)/dur);
+  el.textContent=(target*(1-Math.pow(1-p,3))).toFixed(2); if(p<1)requestAnimationFrame(tick); else el.textContent=target.toFixed(2); })(st); }
 
-function esc(s){ return (s||"").replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
-function countUp(el, target){
-  const start = performance.now(), dur = 500;
-  (function tick(now){
-    const p = Math.min(1,(now-start)/dur);
-    el.textContent = (target*(1-Math.pow(1-p,3))).toFixed(2);
-    if(p<1) requestAnimationFrame(tick); else el.textContent = target.toFixed(2);
-  })(start);
+// race lanes
+function buildLanes(){
+  const wrap=$("lanes"); wrap.innerHTML="";
+  ANGLES.forEach(id=>{
+    const el=document.createElement("div"); el.className="lane running"; el.id="lane-"+id;
+    el.innerHTML=`<span class="ld"></span>${ANGLE_LABEL[id]}<span class="chk">✓</span>`;
+    wrap.appendChild(el);
+  });
+  $("raceCount").textContent = `0 / ${ANGLES.length} reported`;
+}
+let reported=0;
+function markLane(id){
+  const el=$("lane-"+id); if(el){ el.classList.remove("running"); el.classList.add("done"); }
+  reported++; $("raceCount").textContent = `${reported} / ${ANGLES.length} reported`;
 }
 
-const hypCards = {};
-let hypIndex = 0;
-
-function skeleton(){
-  const el = document.createElement("div");
-  el.className = "skel"; el.innerHTML = `<div class="bar s1"></div><div class="bar s2"></div>`;
-  return el;
-}
-function addHyp(h){
-  const first = $("hyps").querySelector(".skel");
-  const el = document.createElement("div");
-  el.className = "hyp"; el.id = "hyp-"+h.id; el.style.setProperty("--i", hypIndex++);
-  el.innerHTML =
-    `<div class="top"><span class="score">···</span>
-       <span class="title">${esc(h.title)}</span></div>
-     <div class="loc"><b>${esc(h.culprit_file)}</b> · ${esc(h.culprit_symbol)} · line ${h.line_hint ?? "?"}
-       · self-confidence ${(h.confidence*100|0)}%</div>
-     <div class="reason">${esc(h.reasoning)}</div>`;
-  if (first) first.replaceWith(el); else $("hyps").appendChild(el);
-  hypCards[h.id] = el;
-}
-function applyRanking(all){
-  all.forEach((r, i) => {
-    const el = hypCards[r.id]; if (!el) return;
-    $("hyps").appendChild(el);                 // reorder to ranked order
+// ranked cards (built from the ranked payload — full data, correct order)
+function buildCards(all){
+  const wrap=$("hyps"); wrap.innerHTML=""; wrap.classList.remove("hidden");
+  all.forEach((r,i)=>{
+    const el=document.createElement("div"); el.className="hyp"+(i===0?" winner":""); el.style.setProperty("--i",i);
+    el.innerHTML=`<div class="top"><span class="score">0.00</span>
+        <span class="title">${esc(r.title)}</span>${i===0?'<span class="tag">top risk</span>':''}</div>
+      <div class="loc"><b>${esc(r.culprit_file)}</b> · ${esc(r.culprit_symbol)} · line ${r.line_hint ?? "?"} · self-confidence ${(r.confidence*100|0)}%</div>
+      <div class="reason">${esc(r.reasoning)}</div>`;
+    wrap.appendChild(el);
     countUp(el.querySelector(".score"), r.risk_score);
-    if (i === 0){
-      el.classList.add("winner");
-      if (!el.querySelector(".tag")){
-        const t = document.createElement("span");
-        t.className = "tag"; t.textContent = "top risk";
-        el.querySelector(".top").appendChild(t);
-      }
-    }
   });
 }
-function showVerdict(card){
-  const v = card.critic, el = $("verdict");
-  $("verdictWrap").classList.remove("hidden");
-  if (v){
-    const ok = !v.disproved;
-    el.className = "verdict " + (ok ? "ok" : "bad");
-    el.innerHTML =
-      `<div class="vhead"><span class="badge">${ok ? "confirmed" : "rejected"}</span>
-         <span>${esc(card.winner ? card.winner.title : "")}</span></div>
-       <div class="vbody">${esc(v.verdict_reason)}</div>
-       <pre class="code">${esc(v.disproof_test)}</pre>`;
-  } else {
-    el.className = "verdict";
-    el.innerHTML = `<div class="vbody">Critic did not return a verdict for this run.</div>`;
-  }
-  if (card.suggested_fix){
-    $("fix").innerHTML = `<b>Suggested fix (byproduct):</b> ${esc(card.suggested_fix)}`;
-  }
+
+function splitCritic(reason){
+  const parts=(reason||"").split("  ||  ");
+  const clean=s=>s.replace(/^Pass\s*\d+\s*\([^)]*\):\s*/i,"").trim();
+  return { isolation: parts[0]?clean(parts[0]):(reason||""), alternative: parts[1]?clean(parts[1]):"" };
 }
 
-// Event pacing: mock mode emits every SSE event within ~10ms, which would show the verdict
-// before the hypothesis cards finish animating in. We drain events with a minimum gap so the
-// Race -> Rank -> Critic -> Fix story always plays out in order. In live mode the real agent
-// delays (~seconds) dwarf these gaps, so pacing is effectively a no-op there.
-let evq = [], draining = false, runToken = 0;
-const GAP = {start:180, hypothesis:340, ranking_start:260, ranked:520, critic_start:420, critic:600, critic_failed:400, done:220};
-function enqueue(ev){ evq.push(ev); if (!draining) drainQueue(); }
-async function drainQueue(){
-  draining = true; const mine = runToken;
-  while (evq.length){
-    if (mine !== runToken){ draining = false; return; }   // a new run superseded this one
-    const ev = evq.shift();
-    handle(ev.kind, ev.payload);
-    await new Promise(r => setTimeout(r, GAP[ev.kind] ?? 150));
-  }
-  draining = false;
+function copyBtn(text){
+  const b=document.createElement("button"); b.className="copy"; b.textContent="copy";
+  b.onclick=()=>{ navigator.clipboard.writeText(text).then(()=>{ b.textContent="copied"; b.classList.add("done"); setTimeout(()=>{b.textContent="copy";b.classList.remove("done");},1400); }); };
+  return b;
 }
+
+function showVerdict(card){
+  const v=card.critic, w=card.winner, el=$("verdict");
+  $("verdictWrap").classList.remove("hidden");
+  const ok = v ? !v.disproved : false;
+  el.className="verdict "+(v?(ok?"ok":"bad"):"");
+  const passes = v ? splitCritic(v.verdict_reason) : {isolation:"",alternative:""};
+  el.innerHTML =
+    `<div class="vhead">${v?`<span class="badge">${ok?"confirmed":"rejected"}</span>`:""}
+       <span class="vtitle">${esc(w?w.title:"No confident diagnosis")}</span></div>
+     ${w?`<div class="culprit"><span class="k">culprit</span>
+       <span class="chipfile">${esc(w.culprit_file)}:${w.line_hint ?? "?"}</span>
+       <span class="chipfile">${esc(w.culprit_symbol)}</span></div>
+       <div class="meter"><div class="mlabel"><span>risk / blast-radius</span><span>${(w.risk_score).toFixed(2)}</span></div>
+         <div class="track"><div class="fill" id="riskFill"></div></div></div>`:""}
+     ${v?`<div class="passes">
+        <div class="pass ${ok?'ok':'bad'}"><span class="pi">${ok?'✓':'✕'}</span><div><div class="pl">Critic pass 1 · isolation</div><div class="pt">${esc(passes.isolation)}</div></div></div>
+        ${passes.alternative?`<div class="pass ${ok?'ok':'bad'}"><span class="pi">${ok?'✓':'✕'}</span><div><div class="pl">Critic pass 2 · alternative cause</div><div class="pt">${esc(passes.alternative)}</div></div></div>`:''}
+      </div>
+      <div class="codeblock"><div class="clabel">disproof test</div><pre class="code" id="disproof">${esc(v.disproof_test)}</pre></div>`:""}
+     ${card.suggested_fix?`<div class="fix" id="fixrow"><b>Suggested fix (byproduct):</b> ${esc(card.suggested_fix)}</div>`:""}`;
+  if(w){ requestAnimationFrame(()=>{ const f=$("riskFill"); if(f) f.style.width=(w.risk_score*100)+"%"; }); }
+  if(v){ const cb=$("disproof"); if(cb&&cb.parentElement) cb.parentElement.appendChild(copyBtn(v.disproof_test)); }
+  if(card.suggested_fix){ const fr=$("fixrow"); if(fr){ const b=copyBtn(card.suggested_fix); b.style.position="static"; b.style.marginLeft="8px"; fr.appendChild(b); } }
+}
+
+// pacing queue: keeps the Race->Rank->Critic->Fix story ordered even when mock emits instantly
+let evq=[],draining=false,runToken=0;
+const GAP={start:160,race_start:120,hypothesis:300,ranking_start:280,ranked:540,critic_start:420,critic:640,critic_failed:420,done:220};
+function enqueue(ev){ evq.push(ev); if(!draining) drain(); }
+async function drain(){ draining=true; const mine=runToken;
+  while(evq.length){ if(mine!==runToken){draining=false;return;} const ev=evq.shift(); handle(ev.kind,ev.payload);
+    await new Promise(r=>setTimeout(r,GAP[ev.kind]??150)); } draining=false; }
 
 $("run").onclick = async () => {
-  const trace = $("trace").value.trim();
-  if (!trace){ setBusy("Paste a failure first."); return; }
-  // reset
+  const trace=$("trace").value.trim();
+  if(!trace){ setError("Paste a failure first."); return; }
   $("empty").classList.add("hidden");
-  $("hyps").classList.remove("hidden"); $("hyps").innerHTML = "";
-  $("verdictWrap").classList.add("hidden"); $("verdict").innerHTML = ""; $("fix").innerHTML = "";
-  for (const k in hypCards) delete hypCards[k];
-  hypIndex = 0;
-  runToken++; evq = [];                 // reset the pacing queue for this run
-  ["race","rank","critic","fix"].forEach(s => setStep(s, null));
-  for (let i=0;i<3;i++) $("hyps").appendChild(skeleton());
-  $("run").disabled = true;
-  $("agentCount").textContent = "—"; $("coins").textContent = "0.00";
-  setBusy("Spawning hypothesis agents…"); setStep("race","active");
-  startTimer();
-
-  try {
-    const resp = await fetch("/triage", {method:"POST",
-      headers:{"Content-Type":"application/json"}, body: JSON.stringify({trace})});
-    if (!resp.ok) throw new Error("HTTP "+resp.status);
-    const reader = resp.body.getReader(), dec = new TextDecoder();
-    let buf = "";
-    while (true){
-      const {value, done} = await reader.read(); if (done) break;
-      buf += dec.decode(value, {stream:true});
-      let idx;
-      while ((idx = buf.indexOf("\n\n")) >= 0){
-        const chunk = buf.slice(0, idx); buf = buf.slice(idx+2);
-        if (!chunk.startsWith("data:")) continue;
-        const {kind, payload} = JSON.parse(chunk.slice(5).trim());
-        enqueue({kind, payload});
-      }
-    }
-  } catch (e){
-    setError("Triage failed: " + e.message);
-  } finally {
-    stopTimer(); $("run").disabled = false;
-  }
+  $("lanesWrap").classList.remove("hidden"); reported=0; buildLanes();
+  $("hyps").innerHTML=""; $("hyps").classList.add("hidden");
+  $("verdictWrap").classList.add("hidden"); $("verdict").innerHTML="";
+  ["race","rank","critic","fix"].forEach(s=>setStep(s,null));
+  $("run").disabled=true; $("agentCount").textContent="—"; $("coins").textContent="0.00";
+  runToken++; evq=[];
+  setBusy("Spawning parallel Bob agents…"); setStep("race","active"); startTimer();
+  try{
+    const resp=await fetch("/triage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({trace})});
+    if(!resp.ok) throw new Error("HTTP "+resp.status);
+    const reader=resp.body.getReader(),dec=new TextDecoder(); let buf="";
+    while(true){ const {value,done}=await reader.read(); if(done)break; buf+=dec.decode(value,{stream:true});
+      let idx; while((idx=buf.indexOf("\n\n"))>=0){ const chunk=buf.slice(0,idx); buf=buf.slice(idx+2);
+        if(!chunk.startsWith("data:"))continue; const {kind,payload}=JSON.parse(chunk.slice(5).trim()); enqueue({kind,payload}); } }
+  }catch(e){ setError("Triage failed: "+e.message); }
+  finally{ stopTimer(); $("run").disabled=false; }
 };
 
-function setBusy(msg){ const s=$("statusline"); s.className="statusline busy"; $("status").textContent=msg; }
-function setDone(msg){ const s=$("statusline"); s.className="statusline done"; $("status").textContent=msg; }
-function setError(msg){ const s=$("statusline"); s.className="statusline"; s.querySelector(".dot").style.background="var(--danger)"; $("status").textContent=msg; }
-
-function handle(kind, p){
-  if (kind === "start"){ setBusy("Triaging: " + p.trace_summary); }
-  else if (kind === "hypothesis"){ addHyp(p); }
-  else if (kind === "ranking_start"){ setBusy("Granite ranking hypotheses by risk…"); setStep("race","done"); setStep("rank","active"); }
-  else if (kind === "ranked"){ applyRanking(p.all_ranked); $("agentCount").textContent = p.all_ranked.length; setStep("rank","done"); }
-  else if (kind === "critic_start"){ setBusy("Adversarial critic attempting to disprove…"); setStep("critic","active"); }
-  else if (kind === "critic" || kind === "critic_failed"){ setStep("critic","done"); setStep("fix","active"); }
-  else if (kind === "done"){
-    setStep("fix","done");
-    $("timer").textContent = p.triage_seconds + "s";
-    if (p.bobcoins != null) $("coins").textContent = (+p.bobcoins).toFixed(2);
-    showVerdict(p);
-    setDone("Triage complete.");
-  }
+function handle(kind,p){
+  if(kind==="start"){ setBusy("Triaging: "+p.trace_summary); }
+  else if(kind==="hypothesis"){ markLane(p.id); }
+  else if(kind==="ranking_start"){ setBusy("watsonx Granite ranking by risk…"); setStep("race","done"); setStep("rank","active"); }
+  else if(kind==="ranked"){ buildCards(p.all_ranked); $("agentCount").textContent=p.all_ranked.length; setStep("rank","done"); }
+  else if(kind==="critic_start"){ setBusy("Two adversarial critics attempting to disprove…"); setStep("critic","active"); }
+  else if(kind==="critic"||kind==="critic_failed"){ setStep("critic","done"); setStep("fix","active"); }
+  else if(kind==="done"){ setStep("fix","done"); $("timer").textContent=p.triage_seconds+"s";
+    if(p.bobcoins!=null)$("coins").textContent=(+p.bobcoins).toFixed(2); showVerdict(p); setDone("Triage complete."); }
 }
+
+// keyboard + focus
+$("trace").addEventListener("keydown",e=>{ if((e.metaKey||e.ctrlKey)&&e.key==="Enter"){ e.preventDefault(); $("run").click(); } });
+window.addEventListener("load",()=>$("trace").focus());
 </script>
 </body>
 </html>
