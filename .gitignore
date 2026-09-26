@@ -9,3 +9,5 @@ __pycache__/
 *.pem
 *_secret*
 ibm-credentials.env
+montage_log.txt
+demo.mp4
