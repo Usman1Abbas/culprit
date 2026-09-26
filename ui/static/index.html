@@ -180,6 +180,7 @@ pre.code{margin:0;background:#0c0c0e;border:1px solid var(--line);border-radius:
         <button class="chip" data-sample="pagination">Pagination bug</button>
         <button class="chip" data-sample="parsing">Null-email bug</button>
         <button class="chip" data-sample="tasks">Async bug</button>
+        <button class="chip" data-sample="slugify">Real repo · slugify</button>
       </div>
       <button class="run" id="run">Run triage <span class="kbd">⌘/Ctrl+↵</span></button>
     </div>
@@ -248,6 +249,21 @@ Traceback (most recent call last):
   File "demo_app/tests/test_tasks.py", line 10, in test_process_task_returns_enriched_dict
     assert isinstance(result, dict)
 AssertionError: got <coroutine object enrich> instead of dict`,
+  slugify:`Traceback (most recent call last):
+  File "slugify/_legacy.py", line 53, in _transliterate
+    module = import_module('unidecode')
+ModuleNotFoundError: No module named 'unidecode'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "app.py", line 12, in <module>
+    slugify(b'Cafe\\xc3\\xa9 Bar')
+  File "slugify/slugify.py", line 211, in slugify
+    return _legacy_slugify(text, entities, decimal, ...)
+  File "slugify/_legacy.py", line 57, in _transliterate
+    module = import_module('text_unidecode')
+ModuleNotFoundError: No module named 'text_unidecode'`,
 };
 document.querySelectorAll("[data-sample]").forEach(b => b.onclick = () => { $("trace").value = SAMPLES[b.dataset.sample]; });
 

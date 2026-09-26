@@ -284,11 +284,59 @@ _SCENARIOS = {
         },
         "fix": "In process_task(), `return await enrich(task)` (add the missing await).",
     },
+    "slugify": {
+        "h3": {
+            "title": "Missing declared dependency 'text-unidecode' — no transliteration backend installed",
+            "culprit_file": "slugify/_legacy.py", "culprit_symbol": "_transliterate", "line_hint": 57,
+            "reasoning": "The 'auto' backend imports 'unidecode', catches ModuleNotFoundError, then falls "
+                         "back to import 'text_unidecode' (line 57) — which also fails. pyproject.toml declares "
+                         "text-unidecode as a required dependency, but neither backend is installed. The code "
+                         "logic is correct; the environment is missing a declared dependency.",
+            "confidence": 0.9,
+        },
+        "h1": {
+            "title": "Logic error in the _transliterate fallback chain",
+            "culprit_file": "slugify/_legacy.py", "culprit_symbol": "_transliterate", "line_hint": 53,
+            "reasoning": "The error.name guard and fallback order are correct; the failure is a missing "
+                         "module, not faulty branching logic.",
+            "confidence": 0.35,
+        },
+        "h2": {
+            "title": "Unvalidated bytes input to slugify()",
+            "culprit_file": "slugify/slugify.py", "culprit_symbol": "slugify", "line_hint": 211,
+            "reasoning": "Bytes are handled; the crash is downstream in transliteration, not input validation.",
+            "confidence": 0.3,
+        },
+        "h4": {
+            "title": "Import race during module loading",
+            "culprit_file": "slugify/_legacy.py", "culprit_symbol": "_transliterate", "line_hint": 53,
+            "reasoning": "No concurrency is involved; import_module fails deterministically because the "
+                         "package is absent.",
+            "confidence": 0.15,
+        },
+        "h5": {
+            "title": "Backend contract mismatch in _transliterate",
+            "culprit_file": "slugify/_legacy.py", "culprit_symbol": "_transliterate", "line_hint": 61,
+            "reasoning": "The backend interface is consistent; the module never loads, so the contract is "
+                         "never reached.",
+            "confidence": 0.4,
+        },
+        "critic": {
+            "disproof_test": "def test_backend_missing():\n    import pytest\n    with pytest.raises(ModuleNotFoundError):\n        __import__('text_unidecode')",
+            "disproved": False,
+            "verdict_reason": "Importing text_unidecode raises ModuleNotFoundError here, and pyproject.toml "
+                              "lists it as required — the dependency is declared but not installed. The code "
+                              "logic is sound; the environment is the root cause.",
+        },
+        "fix": "Install the declared dependency: `pip install text-unidecode` (listed in pyproject.toml but missing from the environment).",
+    },
 }
 
 
 def _detect_scenario(text: str) -> str:
     t = (text or "").lower()
+    if any(k in t for k in ("text_unidecode", "unidecode", "_transliterate", "slugify")):
+        return "slugify"
     if any(k in t for k in ("await", "coroutine", "enrich", "process_task")):
         return "tasks"
     if any(k in t for k in ("email", "nonetype", ".lower", "parse_user", "keyerror")):
